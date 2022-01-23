@@ -3,6 +3,7 @@ nbEmployees=10; /* Nombre d'employés */
 nbSkill=3; /* Nombre de compétences */
  
 Dwork=35;
+horizon=1..40;
 
  
 Risk = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];

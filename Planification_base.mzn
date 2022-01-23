@@ -2,7 +2,7 @@
 include "globals.mzn";
 
 %PARAMETERS ...to be continued
-set of int: horizon=1..40;
+set of int: horizon;
 
 int: nbTasks;
 int: nbEmployees;
