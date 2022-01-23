@@ -36,21 +36,22 @@ var int: heureDeFin;
 
 constraint forall(t in T, s in S)(Qualification[t,s] == Competence[assignation[t],s]); % Les employés ont les compétences requises pour chaque tâche qu'ils effectuent
 
-constraint forall(t in T)(if Predecessor[t] != 0 then startTime[t] >= startTime[Predecessor[t]]+ProcessingTime[Predecessor[t]] endif); % Chaque tâche commence après son prédecesseur (s'il existe !)
+constraint forall(t in T where Predecessor[t] != 0)(startTime[t] >= startTime[Predecessor[t]]+ProcessingTime[Predecessor[t]]); % Chaque tâche commence après son prédecesseur (s'il existe !)
 constraint forall(t in T) (startTime[t]+ProcessingTime[t] <= DeliveryDate[t]); % La tâche finit avant la date butoir
 constraint forall(t in T) (startTime[t] >= Availability[assignation[t]]); % La tâche est débutée par l'employé une fois qu'il est disponible
 
 constraint risqueTotal = sum([ max(0, Risk[t] - Experience[assignation[t]]) | t in T]); % Somme des différences entre le risque d'une tâche et l'expérience de l'employé qui l'exécute.
 
-constraint forall(e in E)(sum ([if assignation[t] == e then ProcessingTime[t] else 0 endif | t in T]) <= 35); % Vérifier qu'aucun employé ne dépasse les 35h
+constraint forall(e in E)(sum ([ProcessingTime[t] | t in T where assignation[t] == e]) <= 35); % Vérifier qu'aucun employé ne dépasse les 35h
 
-constraint affinite = sum([sum([if assignation[t] == e then Preferences[e,t] else 0 endif | t in T]) | e in E]); % Somme des affinités des employés pour les tâches qui leur sont assignées
+constraint affinite = sum([sum([Preferences[e,t] | t in T where assignation[t] == e]) | e in E]); % Somme des affinités des employés pour les tâches qui leur sont assignées
 
 constraint heureDeFin = max([startTime[t]+ProcessingTime[t] | t in T]); % Heure à laquelle finit la dernière tâche du projet
 
 % SOLVE
 
-solve minimize heureDeFin;
+% solve minimize heureDeFin;
+solve maximize affinite;
 
 % OUTPUT
 
