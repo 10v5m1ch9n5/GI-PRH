@@ -30,6 +30,7 @@ array[T] of var E: assignation;
 array[T] of var horizon: startTime;
 var int: risqueTotal;
 var int: affinite;
+var int: heureDeFin;
 
 % CONSTRAINTS
 
@@ -45,9 +46,11 @@ constraint forall(e in E)(sum ([if assignation[t] == e then ProcessingTime[t] el
 
 constraint affinite = sum([sum([if assignation[t] == e then Preferences[e,t] else 0 endif | t in T]) | e in E]); % Somme des affinités des employés pour les tâches qui leur sont assignées
 
+constraint heureDeFin = max([startTime[t]+ProcessingTime[t] | t in T]); % Heure à laquelle finit la dernière tâche du projet
+
 % SOLVE
 
-solve maximize affinite-risqueTotal;
+solve minimize heureDeFin;
 
 % OUTPUT
 
@@ -57,4 +60,5 @@ output["employe \(e) fait les tâches \([t | t in T where assignation[t] = e]) a
 
 output["\nRisque total : \(risqueTotal)\n"];
 output["Affinite totale : \(affinite)\n"];
+output["Heure de fin du projet : \(heureDeFin)"];
 
