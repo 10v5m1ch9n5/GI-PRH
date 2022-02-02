@@ -1,0 +1,29 @@
+nbTasks=3; /* Nombre d'activités */
+nbEmployees=2; /* Nombre d'employés */
+nbSkill=3; /* Nombre de compétences */
+ 
+Dwork=35;
+
+ 
+Risk = [0,0,0];
+ 
+ProcessingTime = [4,8,5];
+ 
+Predecessor = [0,0,2];
+ 
+DeliveryDate =[40,40,40];
+ 
+Qualification = [|1,0,0,
+         |1,0,0,
+         |1,0,0|];
+ 
+Availability = [0,0];    
+ 
+Experience = [2,2];    
+               
+Competence = [|1,0,0,
+         |1,0,0|];
+         
+Preferences = [|2,1,2
+|4,4,4
+|];
